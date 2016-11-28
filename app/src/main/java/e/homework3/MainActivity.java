@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 
 import java.io.File;
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private File file;
@@ -34,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         imageView = (ImageView) findViewById(R.id.image);
         textView = (TextView) findViewById(R.id.error_text);
-        file = new File(getFilesDir(), IMAGE);
+        file = new File(getFilesDir().getAbsolutePath(), IMAGE);
         bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
 
         button = (Button) findViewById(R.id.button);
@@ -92,8 +94,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (v == button) {
-            file.delete();
-            setText();
+            try {
+                boolean bool = file.getCanonicalFile().delete();
+                Log.e("Status:", bool + "");
+                setText();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         } else {
             broadcastReceiver.onReceive(this, new Intent(Intent.ACTION_POWER_CONNECTED));
         }

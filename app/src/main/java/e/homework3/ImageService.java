@@ -48,14 +48,14 @@ public class ImageService extends Service implements Runnable {
             while ((temp = in.read(buffer)) != -1) {
                 out.write(buffer, 0, temp);
             }
+            out.close();
             sendBroadcast(new Intent(MainActivity.BROADCAST));
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             try {
-                if (in != null && out != null) {
+                if (in != null) {
                     in.close();
-                    out.close();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
