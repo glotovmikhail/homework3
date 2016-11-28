@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">homework3</string>
+    <string name="app_name">BroadcastReceiver</string>
+
+    <string name="notLoaded">Не загружено</string>
+    <string name="refresh">Сбросить</string>
+    <string name="imitation">Имитация события</string>
 </resources>
